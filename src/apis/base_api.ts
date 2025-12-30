@@ -4,6 +4,7 @@ import { ServiceProvider } from '@src/constants';
 import { requestUrl } from 'obsidian';
 import { GoogleBooksApi } from './google_books_api';
 import { NaverBooksApi } from './naver_books_api';
+import { OpenLibraryBooksApi } from './openlibrary_books_api';
 
 export interface BaseBooksApiImpl {
   getByQuery(query: string, options?: Record<string, string>): Promise<Book[]>;
@@ -23,6 +24,8 @@ export function factoryServiceProvider(settings: BookSearchPluginSettings): Base
     case ServiceProvider.naver:
       validateNaverSettings(settings);
       return new NaverBooksApi(settings.naverClientId, settings.naverClientSecret);
+    case ServiceProvider.openlibrary:
+      return new OpenLibraryBooksApi();
     default:
       throw new Error('Unsupported service provider.');
   }

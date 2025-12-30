@@ -212,6 +212,7 @@ export class BookSearchSettingTab extends PluginSettingTab {
       .setClass('book-search-plugin__settings--service_provider')
       .addDropdown(dropDown => {
         dropDown.addOption(ServiceProvider.google, `${ServiceProvider.google} (Global)`);
+        dropDown.addOption(ServiceProvider.openlibrary, `${ServiceProvider.openlibrary} (Global)`);
         dropDown.addOption(ServiceProvider.naver, `${ServiceProvider.naver} (Korean)`);
         dropDown.setValue(this.plugin.settings?.serviceProvider ?? ServiceProvider.google);
         dropDown.onChange(async value => {
