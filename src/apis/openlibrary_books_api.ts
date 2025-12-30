@@ -28,13 +28,14 @@ export class OpenLibraryBooksApi implements BaseBooksApiImpl {
   }
 
   private createBookItem(item: OpenLibraryBookItem): Book {
+    const date = new Date(item.publish_date[0]);
     return {
       title: item.title,
       subtitle: item.subtitle,
       author: formatList(item.author_name),
       authors: item.author_name,
       publisher: item.publisher[0],
-      publishDate: item.publish_date[0],
+      publishDate: date.toISOString().slice(0, 10),
       totalPage: item.number_of_pages_median,
       isbn: item.isbn.sort((a, b) => b.length - a.length)[0],
       ...(item.isbn.some(isbn10) && { isbn10: item.isbn.find(isbn10) }),
