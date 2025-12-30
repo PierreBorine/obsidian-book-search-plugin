@@ -30,11 +30,14 @@ export class OpenLibraryBooksApi implements BaseBooksApiImpl {
   // https://openlibrary.org/developers/api
   private createBookItem(item: OpenLibraryBookItem): Book {
     const date = new Date(item.publish_date[0]);
+    // Open Library sometimes includes the publisher in the authors
+    const authors =
+      item.author_name.length > 1 ? item.author_name.filter(el => el != item.publisher[0]) : item.author_name;
     return {
       title: item.title,
       subtitle: item.subtitle,
-      author: formatList(item.author_name),
-      authors: item.author_name,
+      author: formatList(authors),
+      authors,
       publisher: item.publisher[0],
       publishDate: date.toISOString().slice(0, 10),
       totalPage: item.number_of_pages_median,
